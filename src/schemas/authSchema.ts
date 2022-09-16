@@ -11,4 +11,4 @@ const user = joi.object({
     password: joi.string().required()
 });
 
-export default { newUser, user }
+export { newUser, user }
