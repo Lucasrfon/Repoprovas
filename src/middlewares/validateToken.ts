@@ -6,6 +6,11 @@ dotenv.config();
 export default function validateToken() {
     return (req: Request, res: Response, next: NextFunction) => {
         const { authorization } = req.headers;
+
+        if(!authorization?.startsWith('Bearer ')) {
+            throw { type: "unauthorized", message: 'Token no formato inválido'}
+        }
+        
         const token = authorization?.replace('Bearer ', '');
         const secret = process.env.TOKEN_SECRET_KEY;
         
@@ -17,9 +22,7 @@ export default function validateToken() {
             throw { type: "code", message: '.env não implementado' }
         }
 
-        const { userId } = jwt.verify(token, secret) as {userId: number}
-        res.locals.id = userId;
-        
+        jwt.verify(token, secret);
         next();
     }
 }
