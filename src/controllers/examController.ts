@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { insertExam } from "../services/examService";
+import { getAllExamsByDiscipline, insertExam } from "../services/examService";
 import { TExam } from "../types/examTypes";
 
 export async function registerNewExam(req: Request, res: Response) {
@@ -8,4 +8,10 @@ export async function registerNewExam(req: Request, res: Response) {
     await insertExam(exam);
 
     res.status(201).send('Prova cadastrada!')
+}
+
+export async function getExamsGroupByDiscipline(req: Request, res: Response) {
+    const examsGroupByDiscipline = await getAllExamsByDiscipline();
+
+    res.status(200).send(examsGroupByDiscipline);
 }
