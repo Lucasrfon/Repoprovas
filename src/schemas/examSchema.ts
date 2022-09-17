@@ -9,9 +9,9 @@ const urlPattern = new RegExp('^(https?:\\/\\/)?'+ // validate protocol
 
 const examSchema = joi.object({
     name: joi.string().pattern(/^[A-Za-zÀ-ÖØ-öø-ÿ ]*$/).required(),
-    PDFLink: joi.string().pattern(urlPattern).required(),
+    pdfUrl: joi.string().pattern(urlPattern).required(),
     category: joi.string().required(),
-    subject: joi.string().required(),
+    discipline: joi.string().required(),
     teacher: joi.string().pattern(/^[A-Za-zÀ-ÖØ-öø-ÿ ]*$/).required()
 });
 
