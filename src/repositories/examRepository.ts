@@ -52,3 +52,39 @@ export async function findExamGroupByDiscipline() {
         }
     });
 }
+
+export async function findExamGroupByTeacher() {
+    return await client.teachers.findMany({
+        select: {
+            name: true,
+            teachersDisciplines: {
+                select: {
+                    tests: {
+                        select: {
+                            category: {
+                                select: {
+                                    name: true,
+                                    tests: {
+                                        select: {
+                                            name: true,
+                                            pdfUrl:true,
+                                            teacherDiscipline: {
+                                                include: {
+                                                    discipline: {
+                                                        select: {
+                                                            name: true
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    });
+}
