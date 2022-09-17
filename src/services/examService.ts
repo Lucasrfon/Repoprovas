@@ -1,5 +1,5 @@
 import dotenv from 'dotenv';
-import { findDiscipline, findExamCategory, findExamGroupByDiscipline, findTeacher, findTeacherDiscipline, registerExam } from '../repositories/examRepository';
+import { findDiscipline, findExamCategory, findExamGroupByDiscipline, findExamGroupByTeacher, findTeacher, findTeacherDiscipline, registerExam } from '../repositories/examRepository';
 import { TExam } from '../types/examTypes';
 dotenv.config();
 
@@ -30,4 +30,8 @@ export async function insertExam(exam: TExam) {
 
 export async function getAllExamsByDiscipline() {
     return await findExamGroupByDiscipline();
+}
+
+export async function getAllExamsByDTeacher() {
+    return await findExamGroupByTeacher();
 }
