@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { getAllExamsByDiscipline, insertExam } from "../services/examService";
+import { getAllExamsByDiscipline, getAllExamsByTeacher, insertExam } from "../services/examService";
 import { TExam } from "../types/examTypes";
 
 export async function registerNewExam(req: Request, res: Response) {
@@ -14,4 +14,10 @@ export async function getExamsGroupByDiscipline(req: Request, res: Response) {
     const examsGroupByDiscipline = await getAllExamsByDiscipline();
 
     res.status(200).send(examsGroupByDiscipline);
+}
+
+export async function getExamsGroupByTeacher(req: Request, res: Response) {
+    const examsGroupByTeacher = await getAllExamsByTeacher();
+
+    res.status(200).send(examsGroupByTeacher);
 }

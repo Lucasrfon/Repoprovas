@@ -32,6 +32,6 @@ export async function getAllExamsByDiscipline() {
     return await findExamGroupByDiscipline();
 }
 
-export async function getAllExamsByDTeacher() {
+export async function getAllExamsByTeacher() {
     return await findExamGroupByTeacher();
 }
