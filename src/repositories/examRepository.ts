@@ -20,3 +20,35 @@ export async function findTeacherDiscipline(teacherId: number, disciplineId: num
 export async function registerExam(exam: TInsertExam) {
     return await client.tests.create({data: exam});
 }
+
+export async function findExamGroupByDiscipline() {
+    return await client.terms.findMany({
+        select: {
+            number: true,
+            disciplines: {
+                select: {
+                    name: true,
+                    teachersDisciplines: {
+                        select: {
+                            tests: {
+                                select: {
+                                    name: true,
+                                    pdfUrl:true,
+                                    teacherDiscipline: {
+                                        select: {
+                                            teacher: {
+                                                select: {
+                                                    name: true
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    });
+}
