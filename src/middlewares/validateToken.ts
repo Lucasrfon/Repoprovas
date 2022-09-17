@@ -6,11 +6,6 @@ dotenv.config();
 export default function validateToken() {
     return (req: Request, res: Response, next: NextFunction) => {
         const { authorization } = req.headers;
-
-        if(!authorization?.startsWith('Bearer ')) {
-            throw { type: "unauthorized", message: 'Token no formato inválido'}
-        }
-        
         const token = authorization?.replace('Bearer ', '');
         const secret = process.env.TOKEN_SECRET_KEY;
         
@@ -18,6 +13,10 @@ export default function validateToken() {
             throw { type: "unauthorized", message: 'Token necessário' }
         }
         
+        if(!authorization?.startsWith('Bearer ')) {
+            throw { type: "unauthorized", message: 'Token no formato inválido'}
+        }
+
         if(!secret) {
             throw { type: "code", message: '.env não implementado' }
         }
