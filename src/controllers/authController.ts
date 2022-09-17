@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
-import { string } from "joi";
 import { checkLogin, createUser } from "../services/authService";
-import { TypeAuth } from "../utils/types";
+import { TAuth } from "../types/authTypes";
 
 export async function signup(req: Request, res: Response) {
     const user = req.body as {email: string, password: string, confirmPassword: string};
@@ -13,7 +12,7 @@ export async function signup(req: Request, res: Response) {
 }
 
 export async function login(req: Request, res: Response) {
-    const user: TypeAuth = req.body;
+    const user: TAuth = req.body;
 
     const token = await checkLogin(user);
 

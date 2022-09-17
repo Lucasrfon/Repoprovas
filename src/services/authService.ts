@@ -2,10 +2,10 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import { findUserByEmail, insertUser } from '../repositories/authRepository';
-import { TypeAuth } from '../utils/types';
+import { TAuth } from '../types/authTypes';
 dotenv.config();
 
-export async function createUser(user: TypeAuth) {
+export async function createUser(user: TAuth) {
     const SALT = 5
     await isUniqueEmail(user.email);
     user.password = bcrypt.hashSync(user.password, SALT);
@@ -20,7 +20,7 @@ export async function isUniqueEmail(email: string) {
     }
 }
 
-export async function checkLogin(user: TypeAuth) {
+export async function checkLogin(user: TAuth) {
     const findUser = await findUserByEmail(user.email);
     
     if(!findUser) {
