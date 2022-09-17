@@ -1,7 +1,14 @@
 export type TExam = {
     name: string,
-    PDFLink: string,
+    pdfUrl: string,
     category: string,
-    subject: string,
+    discipline: string,
     teacher: string
+}
+
+export type TInsertExam = {
+    name: string,
+    pdfUrl: string,
+    categoryId: number,
+    teacherDisciplineId: number
 }
