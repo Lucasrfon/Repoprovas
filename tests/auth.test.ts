@@ -24,24 +24,25 @@ describe('POST /signup', () => {
     });
 
     it('Schema incompleto deve retornar 422', async () => {
-        const user = loginFactory();
+        const user = {};
 
         const result = await supertest(app).post("/signup").send(user);
         const status = result.status;
 
-        expect(status).toBe(500);
+        expect(status).toBe(422);
         expect(result.body).toBeInstanceOf(Object);
     });
 
     it('Email já cadastrado deve retornar 409', async () => {
-        const user = loginFactory();
-        const newUser = {...user, confirmPassword: (await user).password}
+        const user = await loginFactory();
+        const newUser = {...user, confirmPassword: user.password}
         await supertest(app).post("/signup").send(newUser);
 
         const result = await supertest(app).post("/signup").send(newUser);
         const status = result.status;
 
-        expect(status).toBe(500)    
+        expect(status).toBe(409);
+        expect(result.body).toBeInstanceOf(Object);
     });
 });
 
