@@ -59,28 +59,20 @@ export async function findExamGroupByTeacher() {
             name: true,
             teachersDisciplines: {
                 select: {
-                    tests: {
+                    discipline: {
                         select: {
-                            category: {
+                            name: true,
+                            term: {
                                 select: {
-                                    name: true,
-                                    tests: {
-                                        select: {
-                                            name: true,
-                                            pdfUrl:true,
-                                            teacherDiscipline: {
-                                                include: {
-                                                    discipline: {
-                                                        select: {
-                                                            name: true
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
+                                    number: true
                                 }
                             }
+                        }
+                    },
+                    tests: {
+                        select: {
+                            name: true,
+                            pdfUrl: true
                         }
                     }
                 }
