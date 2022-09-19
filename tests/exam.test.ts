@@ -128,15 +128,55 @@ describe('POST /exams', () => {
     });
 });
 
-// describe('GET /exams/discipline', () => {
-//     it('Sucesso deve retornar 200', async () => {
+describe('GET /exams/discipline', () => {
+    it('Sucesso deve retornar 200', async () => {
+        const user = await loginFactory();
+        const newUser = {...user, confirmPassword: user.password};
+        await supertest(app).post("/signup").send(newUser);
+        const { text } = await supertest(app).post("/login").send(user);
 
-//         const result = await supertest(app).post("/exams").send();
-//         const status = result.status;
+        const result = await supertest(app).get("/exams/discipline").send().set('Authorization', `Bearer ${text}`);
+        const status = result.status;
 
-//         expect(status).toBe(200);
-//     });
-// });
+        expect(status).toBe(200);
+    });
+
+    it('Erro no token deve retornar 401', async () => {
+        const exam = await examFactory();
+        const user = await loginFactory();
+        const newUser = {...user, confirmPassword: user.password};
+        await supertest(app).post("/signup").send(newUser);
+        const { text } = await supertest(app).post("/login").send(user);
+
+        const result = await supertest(app).post("/exams").send({
+            ...exam,
+            category: "Projeto",
+            discipline: "React",
+            teacher: "Diego Pinho"
+        }).set('Authorization', `Bear ${text}`);
+        const status = result.status;
+
+        const result2 = await supertest(app).post("/exams").send({
+            ...exam,
+            category: "Projeto",
+            discipline: "React",
+            teacher: "Diego Pinho"
+        });
+        const status2 = result2.status;
+
+        const result3 = await supertest(app).post("/exams").send({
+            ...exam,
+            category: "Projeto",
+            discipline: "React",
+            teacher: "Diego Pinho"
+        }).set('Authorization', `Bearer ${text + 123}`);;
+        const status3 = result3.status;
+
+        expect(status).toBe(401);
+        expect(status2).toBe(401);
+        expect(status3).toBe(401);
+    });
+});
 
 // describe('GET /exams/teacher', () => {
 //     it('Sucesso deve retornar 200', async () => {
